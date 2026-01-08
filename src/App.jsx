@@ -9,26 +9,26 @@ function App() {
   ]);
   const[activity,setActivity] = useState('');
   const[calories,setCalories] = useState('');
+  var totalcalories=0;
   const handleSubmit = (event) =>{
     event.preventDefault();
-    let i;
-    if(activities.length>0){
-     i = activities.length-1;
-     i=activities[i].id;
-    }
-    else{
-      i=1;
-    }
+    let i = Date.now();
     const ListItem ={
       id: i,
       Activity: activity,
       calories: Number(calories),
     }
-      setActivities(prevActivites => [...prevActivites,ListItem]);
+    setActivities(prevActivites => [...prevActivites,ListItem]);
       setActivity('');
       setCalories('');
   }
+  const deleteListItem =(idToDelete) => {
+    const updatedActivities = activities.filter(act => act.id !== idToDelete);
+    setActivities(updatedActivities);
+
+  };
   return (
+    <div>
     <div>
       <form onSubmit = {handleSubmit}>
         <h2>Activity </h2>
@@ -37,15 +37,27 @@ function App() {
         <input type="number" value={calories} onChange={(e) => setCalories(e.target.value)}></input>
         <button type="submit">Add</button>
       </form>
+      </div>
+      <div>
     <ul>
       {
         activities.map(activity=>(
-        <li key={activity.id}> {activity.Activity} - {activity.calories}</li>
+        <div>
+        <li key={activity.id}> {activity.Activity} - {activity.calories} <button onClick={() => deleteListItem(activity.id)}>X</button>
+        </li> 
+        </div>
         )
         )
       }
     </ul>
     </div>
+    <div>
+    <p>Total Calories = {totalcalories = activities.reduce((accumlator,currtenItem)=>{
+          return accumlator+currtenItem.calories;
+        },0)}</p>
+    </div>
+    </div>
+    
   )
 }
 
