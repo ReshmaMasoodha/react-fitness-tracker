@@ -13,7 +13,7 @@ export const ActivityForm = (props) => {
     }
       setActivity('');
       setCalories('');
-      props.getListItem(ListItem);
+      props.onAddActivity(ListItem);
   };
   return (
   <form onSubmit = {handleSubmit}>

@@ -1,5 +1,4 @@
 import {ActivityItem} from './ActivityItem'
-import { useState} from 'react'
 
 export const ActivityList = ({activities, onDeleteActivity}) => {
   return(

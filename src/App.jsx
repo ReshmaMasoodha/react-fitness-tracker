@@ -6,29 +6,24 @@ import { ActivityList } from './ActivityList';
 function App() {
   const [activities,setActivities]=useState([]);
   var totalcalories=0;
-  const handleCallback = (ListItem) => {
+  const addActivity = (ListItem) => {
     setActivities(prevActivities => [...prevActivities,ListItem]);
   }
-  const deleteListItem =(idToDelete) => {
+  const onDelete =(idToDelete) => {
     const updatedActivities = activities.filter(act => act.id !== idToDelete);
     setActivities(updatedActivities);
   };
+  totalcalories  = activities.reduce((accumlator,currtenItem)=>{
+          return accumlator+currtenItem.calories;
+        },0);
+  
   
   return (
     <div>
-    <div>
-      <ActivityForm getListItem = {handleCallback} />
+      <ActivityForm onAddActivity = {addActivity} />
+      <ActivityList activities = {activities} onDeleteActivity = {onDelete} />
+      <p>Total Calories = {totalcalories}</p>
     </div>
-    <div>
-      <ActivityList activities = {activities} onDeleteActivity = {deleteListItem} />
-    </div>
-    <div>
-    <p>Total Calories = {totalcalories = activities.reduce((accumlator,currtenItem)=>{
-          return accumlator+currtenItem.calories;
-        },0)}</p>
-    </div>
-    </div>
-    
   )
 }
 
