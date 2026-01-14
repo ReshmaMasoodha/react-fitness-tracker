@@ -23,6 +23,7 @@ function App() {
       <ActivityForm onAddActivity = {addActivity} />
       <ActivityList activities = {activities} onDeleteActivity = {onDelete} />
       <p>Total Calories = {totalcalories}</p>
+      <p>Total Activities = {activities.length}</p>
     </div>
   )
 }
