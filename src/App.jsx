@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { ActivityForm} from "./ActivityForm";
 import './App.css';
 import { ActivityList } from './ActivityList';
@@ -16,7 +16,15 @@ function App() {
   totalcalories  = activities.reduce((accumlator,currtenItem)=>{
           return accumlator+currtenItem.calories;
         },0);
-  
+  useEffect(()=> {
+    const storedData= JSON.parse(localStorage.getItem('storedData'));
+    if(storedData!=null){
+      setActivities(storedData);
+    }
+  },[]);
+  useEffect(()=> {
+      localStorage.setItem('storedData',JSON.stringify(activities));
+  },[activities]);
   
   return (
     <div>
