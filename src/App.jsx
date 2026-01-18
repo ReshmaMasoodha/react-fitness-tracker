@@ -18,14 +18,10 @@ function App() {
     setEditId(edit);
   }
   const updateActivityItem = (edActivityItem) => {
-    let i;
-    for (i=0;i<activities.length;i++){
-      if(activities[i].id==edActivityItem.id){
-        activities[i].Activity = edActivityItem.Activity;
-        activities[i].calories=edActivityItem.calories;
-        setEditId('');
-      }
-    }
+    const updateActivities = activities.filter(act => act.id!== edActivityItem.id);
+    const updateActivities1= [...updateActivities,edActivityItem];
+    setActivities(updateActivities1);
+    setEditId('');
   }
   totalcalories  = activities.reduce((accumlator,currtenItem)=>{
           return accumlator+currtenItem.calories;
