@@ -4,7 +4,17 @@ import './App.css';
 import { ActivityList } from './ActivityList';
 
 function App() {
-  const [activities,setActivities]=useState([]);
+  //moved read localStorage to state to avoid useEffect race in strictMode
+  const [activities,setActivities]=useState(() => {
+    const storedData = JSON.parse(localStorage.getItem('storedData'));
+    if (storedData!=null){
+      return storedData;
+    }
+    else{
+      const data1 = [];
+      return data1;
+    }
+  });
   const [editId,setEditId] = useState('');
   var totalcalories=0;
   const addActivity = (ListItem) => {
@@ -33,12 +43,6 @@ function App() {
   totalcalories  = activities.reduce((accumlator,currtenItem)=>{
           return accumlator+currtenItem.calories;
         },0);
-  useEffect(()=> {
-    const storedData= JSON.parse(localStorage.getItem('storedData'));
-    if(storedData!=null){
-      setActivities(storedData);
-    }
-  },[]);
   useEffect(()=> {
       localStorage.setItem('storedData',JSON.stringify(activities));
   },[activities]);
