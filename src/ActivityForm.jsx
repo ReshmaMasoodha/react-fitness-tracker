@@ -31,6 +31,7 @@ export const ActivityForm = (props) => {
       id: i,
       Activity: activity,
       calories: Number(calories),
+      date: new Date(),
     }
       setActivity('');
       setCalories('');

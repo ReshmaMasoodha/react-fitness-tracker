@@ -13,11 +13,11 @@ export const ActivityItem = ({activity,onDelete, onEdit, editId, updateActivityI
   const  checkInputFields = Number(edCal)<=0||!edAct.trim();
   return(
     <>
-      {editId ==activity.id && <li><input type="text" value={edAct} onChange={e=> setEdAct(e.target.value)}placeholder={activity.Activity}></input>
+      {
+      editId ==activity.id ? <li><input type="text" value={edAct} onChange={e=> setEdAct(e.target.value)}placeholder={activity.Activity}></input>
         <input type="number" value={edCal} onChange={e=>setEdCal(e.target.value)} placeholder={activity.calories}/><button disabled = {checkInputFields} onClick ={handleSave}> Save </button>
         </li>
-      }
-      {editId != activity.id &&
+       :
        <li>{activity.Activity} - {activity.calories}
        <button onClick={() => onDelete(activity.id)}>X </button>
       <button onClick={() => onEdit(activity.id)}> ✏ </button></li>

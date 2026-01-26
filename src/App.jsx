@@ -16,7 +16,6 @@ function App() {
     }
   });
   const [editId,setEditId] = useState('');
-  var totalcalories=0;
   const addActivity = (ListItem) => {
     setActivities(prevActivities => [...prevActivities,ListItem]);
   }
@@ -40,9 +39,6 @@ function App() {
     setActivities(act1);
     setEditId('');
   }
-  totalcalories  = activities.reduce((accumlator,currtenItem)=>{
-          return accumlator+currtenItem.calories;
-        },0);
   useEffect(()=> {
       localStorage.setItem('storedData',JSON.stringify(activities));
   },[activities]);
@@ -51,8 +47,6 @@ function App() {
     <div>
       <ActivityForm onAddActivity = {addActivity} />
       <ActivityList activities = {activities} onDeleteActivity = {onDelete} onEditActivity = {onEdit} editId={editId} updateAct ={updateActivityItem}/>
-      <p>Total Calories = {totalcalories}</p>
-      <p>Total Activities = {activities.length}</p>
     </div>
   )
 }
