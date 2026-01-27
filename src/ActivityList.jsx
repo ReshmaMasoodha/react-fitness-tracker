@@ -1,54 +1,37 @@
 import {ActivityItem} from './ActivityItem'
 import { useState} from 'react'
 export const ActivityList = ({activities, onDeleteActivity, onEditActivity, editId, updateAct}) => {
-  const [DateFilter,setDateFilter] = useState('');
+  const [dateFilter,setDateFilter] = useState('day');
   var totalcalories=0;
-  const handleChange = (event) => {
+  const handleRadio = (event) => {
     setDateFilter(event.target.value);
   }
   const filteredActivites = activities.filter(act=> {
-    if(DateFilter=="day"){
-      const date=new Date(act.date);
-    const date1 = new Date();
-    if (date.getFullYear()==date1.getFullYear()&&date.getMonth()==date1.getMonth()){
-      if(date.getDate()==date1.getDate()){
+    const actDate=new Date(act.date);
+    const currentDate = new Date();
+    if (actDate.getFullYear()==currentDate.getFullYear()&&actDate.getMonth()==currentDate.getMonth()){
+      if(dateFilter=="day"){
+        if(actDate.getDate()==currentDate.getDate()){
         return true
+        }
+        else{
+          return false
+        }
       }
-      else{
-        return false
-      }
-    }
-    else{
-      return false
-    }
-    }
-    else if (DateFilter=="week"){
-      const date=new Date(act.date);
-    const date1 = new Date();
-    if (date.getFullYear()==date1.getFullYear()&&date.getMonth()==date1.getMonth()){
-      if(date.getDate()>=(date1.getDate()-7)){
+      else if (dateFilter=="week"){
+        if (actDate.getDate()>=currentDate.getDate()-7){
         return true;
+        }
+        else{
+          return false;
+        }
       }
-      else{
-        return false;
+      else if(dateFilter=="month"){
+          return true;
       }
     }
     else{
       return false;
-    }
-    }
-    else if(DateFilter=="month"){
-      const date=new Date(act.date);
-    const date1 = new Date();
-    if (date.getFullYear()==date1.getFullYear()&&date.getMonth()==date1.getMonth()){
-      return true;
-    }
-    else{
-      return false;
-    }
-    }
-    else{
-      return true;
     }
   });
   totalcalories  = filteredActivites.reduce((accumlator,currtenItem)=>{
@@ -60,18 +43,18 @@ export const ActivityList = ({activities, onDeleteActivity, onEditActivity, edit
       <lable>
         <input type="radio"
         value="day"
-        checked={DateFilter=="day"}
-        onChange = {handleChange}/>Day
+        checked={dateFilter=="day"}
+        onChange = {handleRadio}/>Day
         <input type="radio"
         value="week"
-        checked={DateFilter=="week"}
-        onChange = {handleChange}/>Week
+        checked={dateFilter=="week"}
+        onChange = {handleRadio}/>Week
         <input type="radio"
         value = "month"
-        checked={DateFilter=="month"}
-        onChange={handleChange}/>Month
+        checked={dateFilter=="month"}
+        onChange={handleRadio}/>Month
       </lable>
-        { filteredActivites ?
+        { filteredActivites.length>0?
         filteredActivites.map(activity=>(
         <ActivityItem key= {activity.id}
           activity = {activity}
