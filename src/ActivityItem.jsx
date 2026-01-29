@@ -2,11 +2,13 @@ import { useState } from 'react';
 export const ActivityItem = ({activity,onDelete, onEdit, editId, updateActivityItem}) => {
   const [edAct,setEdAct] = useState(activity.Activity);
   const [edCal,setEdCal] = useState(activity.calories);
+  const [edDate,setEdDate] = useState(activity.date)
   const handleSave = (event) => {
     const edActivityItem = {
       id: activity.id,
       Activity: edAct,
       calories: Number(edCal),
+      date: new Date(edDate),
     };
     updateActivityItem(edActivityItem);
   };
@@ -14,8 +16,8 @@ export const ActivityItem = ({activity,onDelete, onEdit, editId, updateActivityI
   return(
     <>
       {
-      editId ==activity.id ? <li><input type="text" value={edAct} onChange={e=> setEdAct(e.target.value)}placeholder={activity.Activity}></input>
-        <input type="number" value={edCal} onChange={e=>setEdCal(e.target.value)} placeholder={activity.calories}/><button disabled = {checkInputFields} onClick ={handleSave}> Save </button>
+      editId ==activity.id ? <li><input type="text" value={edAct} onChange={e=> setEdAct(e.target.value)}></input>
+        <input type="number" value={edCal} onChange={e=>setEdCal(e.target.value)}/><button disabled = {checkInputFields} onClick ={handleSave}> Save </button>
         </li>
        :
        <li>{activity.Activity} - {activity.calories}

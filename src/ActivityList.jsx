@@ -6,25 +6,37 @@ export const ActivityList = ({activities, onDeleteActivity, onEditActivity, edit
   const handleRadio = (event) => {
     setDateFilter(event.target.value);
   }
+  const isToday = (dat,cur) => {
+    if(dat.getDate()==cur.getDate()){
+      return true
+    }
+    else{
+      return false
+    }
+  }
+  const isThisWeek = (dat,cur) => {
+    if (dat.getDate()>=cur.getDate()-7&&dat.getDate()<=cur.getDate()){
+      if(dat.getDay()>=0&&dat.getDay()<=cur.getDay()){
+        return true;
+      }
+      else{
+        return false;
+      }
+    }
+    else{
+      return false;
+    }
+  }
   const filteredActivites = activities.filter(act=> {
     const actDate=new Date(act.date);
     const currentDate = new Date();
+    //cannot view previous year or month
     if (actDate.getFullYear()==currentDate.getFullYear()&&actDate.getMonth()==currentDate.getMonth()){
       if(dateFilter=="day"){
-        if(actDate.getDate()==currentDate.getDate()){
-        return true
-        }
-        else{
-          return false
-        }
+        return isToday(actDate,currentDate);
       }
       else if (dateFilter=="week"){
-        if (actDate.getDate()>=currentDate.getDate()-7){
-        return true;
-        }
-        else{
-          return false;
-        }
+        return isThisWeek(actDate,currentDate);
       }
       else if(dateFilter=="month"){
           return true;
