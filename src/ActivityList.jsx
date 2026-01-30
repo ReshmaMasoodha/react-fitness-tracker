@@ -2,9 +2,19 @@ import {ActivityItem} from './ActivityItem'
 import { useState} from 'react'
 export const ActivityList = ({activities, onDeleteActivity, onEditActivity, editId, updateAct}) => {
   const [dateFilter,setDateFilter] = useState('day');
+  const currentDate = new Date();
+  const [viewDate,setViewDate] = useState(currentDate);
+  const [viewMonth,setViewMonth] = useState(currentDate.getMonth());
+  const [viewYear,setViewYear] = useState(currentDate.getFullYear());
   var totalcalories=0;
   const handleRadio = (event) => {
     setDateFilter(event.target.value);
+  }
+  const handleMonth = (event) => {
+    setViewMonth(Number(event.target.value));
+  }
+  const handleYear = (event) => {
+    setViewYear(Number(event.target.value));
   }
   const isToday = (dat,cur) => {
     if(dat.getDate()==cur.getDate()){
@@ -29,14 +39,12 @@ export const ActivityList = ({activities, onDeleteActivity, onEditActivity, edit
   }
   const filteredActivites = activities.filter(act=> {
     const actDate=new Date(act.date);
-    const currentDate = new Date();
-    //cannot view previous year or month
-    if (actDate.getFullYear()==currentDate.getFullYear()&&actDate.getMonth()==currentDate.getMonth()){
+    if (actDate.getFullYear()==viewYear&&actDate.getMonth()==viewMonth){
       if(dateFilter=="day"){
-        return isToday(actDate,currentDate);
+        return isToday(actDate,viewDate);
       }
       else if (dateFilter=="week"){
-        return isThisWeek(actDate,currentDate);
+        return isThisWeek(actDate,viewDate);
       }
       else if(dateFilter=="month"){
           return true;
@@ -64,7 +72,59 @@ export const ActivityList = ({activities, onDeleteActivity, onEditActivity, edit
         <input type="radio"
         value = "month"
         checked={dateFilter=="month"}
-        onChange={handleRadio}/>Month
+        onChange={handleRadio}/> Month
+        <select onChange = {handleMonth}>
+          <option value="0">
+            January
+          </option>
+          <option value="1">
+            February
+          </option>
+          <option value="2">
+            March
+          </option>
+          <option value="3">
+            April
+          </option>
+          <option value="4">
+            May
+          </option>
+          <option value="5">
+            June
+          </option>
+          <option value="6">
+            July
+          </option>
+          <option value="7">
+            August
+          </option>
+          <option value="8">
+            September
+          </option>
+          <option value="9">
+            October
+          </option>
+          <option value="10">
+            November
+          </option>
+          <option value="11">
+            December
+          </option>
+        </select>
+        <select onChange={handleYear}>
+          <option value="2026">
+            2026
+          </option>
+          <option value="2025">
+            2025
+          </option>
+          <option value="2024">
+            2024
+          </option>
+          <option value="2023">
+            2023
+          </option>
+        </select>
       </lable>
         { filteredActivites.length>0?
         filteredActivites.map(activity=>(
