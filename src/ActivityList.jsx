@@ -44,7 +44,7 @@ export const ActivityList = ({activities, onDeleteActivity, onEditActivity, edit
   }
   const filteredActivites = activities.filter(act=> {
     const actDate=new Date(act.date);
-    if (actDate.getFullYear()==viewYear&&actDate.getMonth()==viewMonth){
+    if (actDate.getFullYear()==viewDate.getFullYear()&&actDate.getMonth()==viewDate.getMonth()){
       if(dateFilter=="day"){
         return isToday(actDate,viewDate);
       }
