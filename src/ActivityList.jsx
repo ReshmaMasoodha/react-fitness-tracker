@@ -18,8 +18,8 @@ export const ActivityList = ({activities, onDeleteActivity, onEditActivity, edit
     setDateFilter(event.target.value);
   }
   const handleDate = (event) => {
-    const can1= Number(event.target.value);
-    const can = new Date(viewYear,viewMonth,can1);
+    const dateInput= Number(event.target.value);
+    const can = new Date(viewYear,viewMonth,dateInput);
     setViewDate(can);
   }
   const handleMonth = (event) => {
@@ -38,9 +38,9 @@ export const ActivityList = ({activities, onDeleteActivity, onEditActivity, edit
   }
   const isThisWeek = (dat,cur) => {
     const dayofWeek = cur.getDay();
-    const dateBefore = new Date(cur.getFullYear(),cur.getMonth(),cur.getDate()-dayofWeek);
-    const dateAfter = new Date(cur.getFullYear(),cur.getMonth(),dateBefore.getDate()+6);
-    if(dat.getDate()>=dateBefore.getDate()&&dat.getDate()<=dateAfter.getDate()){
+    const startOfWeek = new Date(cur.getFullYear(),cur.getMonth(),cur.getDate()-dayofWeek);
+    const endOfWeek = new Date(cur.getFullYear(),cur.getMonth(),startOfWeek.getDate()+6);
+    if(dat.getDate()>=startOfWeek.getDate()&&dat.getDate()<=endOfWeek.getDate()){
       return true;
     }
     else{
@@ -83,7 +83,7 @@ export const ActivityList = ({activities, onDeleteActivity, onEditActivity, edit
         value = "month"
         checked={dateFilter=="month"}
         onChange={handleRadio}/> Month
-        <div>
+        <div>{dateFilter != "month" &&
           <select onChange={handleDate}>
             {
               daysList.map(day =>(
@@ -91,9 +91,10 @@ export const ActivityList = ({activities, onDeleteActivity, onEditActivity, edit
                 {day}
               </option>
               )
-              )
+              ) 
             }
           </select>
+        }
         </div>
         <select onChange = {handleMonth}>
           <option value="0">
