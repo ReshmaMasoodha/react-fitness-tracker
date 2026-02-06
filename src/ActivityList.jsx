@@ -28,6 +28,20 @@ export const ActivityList = ({activities, onDeleteActivity, onEditActivity, edit
   const handleYear = (event) => {
     setViewYear(Number(event.target.value));
   }
+  const months = [
+    {value: 0, label: 'January'},
+    {value: 1, label: 'February'},
+    {value: 2, label: 'March'},
+    {value: 3, label: 'April'},
+    {value: 4, label: 'May'},
+    {value: 5, label: 'June'},
+    {value: 6, label: 'July'},
+    {value: 7, label: 'August'},
+    {value: 8, label: 'September'},
+    {value: 9, label: 'October'},
+    {value: 10, label: 'November'},
+    {value: 11, label: 'December'},
+  ]
   const isToday = (dat,cur) => {
     if(dat.getDate()==cur.getDate()){
       return true
@@ -84,7 +98,7 @@ export const ActivityList = ({activities, onDeleteActivity, onEditActivity, edit
         checked={dateFilter=="month"}
         onChange={handleRadio}/> Month
         <div>{dateFilter != "month" &&
-          <select onChange={handleDate}>
+          <select value = {viewDate} onChange={handleDate}>
             {
               daysList.map(day =>(
               <option value = {day}>
@@ -96,43 +110,13 @@ export const ActivityList = ({activities, onDeleteActivity, onEditActivity, edit
           </select>
         }
         </div>
-        <select onChange = {handleMonth}>
-          <option value="0">
-            January
+        <select value = {viewMonth} onChange = {handleMonth}>
+          {months.map((month) =>
+          <option value={month.value}>
+            {month.label}
           </option>
-          <option value="1">
-            February
-          </option>
-          <option value="2">
-            March
-          </option>
-          <option value="3">
-            April
-          </option>
-          <option value="4">
-            May
-          </option>
-          <option value="5">
-            June
-          </option>
-          <option value="6">
-            July
-          </option>
-          <option value="7">
-            August
-          </option>
-          <option value="8">
-            September
-          </option>
-          <option value="9">
-            October
-          </option>
-          <option value="10">
-            November
-          </option>
-          <option value="11">
-            December
-          </option>
+          )
+          }
         </select>
         <select onChange={handleYear}>
           <option value="2026">
