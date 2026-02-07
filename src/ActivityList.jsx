@@ -4,8 +4,8 @@ export const ActivityList = ({activities, onDeleteActivity, onEditActivity, edit
   const [dateFilter,setDateFilter] = useState('day');
   const currentDate = new Date();
   const [viewDate,setViewDate] = useState(currentDate);
-  const [viewMonth,setViewMonth] = useState(currentDate.getMonth());
-  const [viewYear,setViewYear] = useState(currentDate.getFullYear());
+  const [viewMonth,setViewMonth] = useState(viewDate.getMonth());
+  const [viewYear,setViewYear] = useState(viewDate.getFullYear());
   var totalcalories=0;
   
   var daysInMonth = new Date(viewYear,viewMonth + 1, 0).getDate();
@@ -23,10 +23,20 @@ export const ActivityList = ({activities, onDeleteActivity, onEditActivity, edit
     setViewDate(can);
   }
   const handleMonth = (event) => {
-    setViewMonth(Number(event.target.value));
+    const chosenMonth = Number(event.target.value);
+    const existDate = Number(viewDate.getDate());
+    const existYear = Number(viewDate.getFullYear())
+    const changeDate = new Date(existYear,chosenMonth,existDate);
+    setViewDate(changeDate);
+    setViewMonth(chosenMonth);
   }
   const handleYear = (event) => {
-    setViewYear(Number(event.target.value));
+    const existDate = Number(viewDate.getDate());
+    const existMonth = Number(viewDate.getMonth());
+    const chosenYear = Number(event.target.value);
+    const changeDate = new Date(chosenYear, existMonth, existDate);
+    setViewDate(changeDate);
+    setViewYear(chosenYear);
   }
   const months = [
     {value: 0, label: 'January'},
@@ -98,20 +108,19 @@ export const ActivityList = ({activities, onDeleteActivity, onEditActivity, edit
         checked={dateFilter=="month"}
         onChange={handleRadio}/> Month
         <div>{dateFilter != "month" &&
-          <select value = {viewDate} onChange={handleDate}>
+          <select value = {viewDate.getDate()} onChange={handleDate}>
             {
-              daysList.map(day =>(
-              <option value = {day}>
+              daysList.map(day =>
+              <option key = {day} value = {day}>
                 {day}
               </option>
-              )
               ) 
             }
           </select>
         }
         </div>
         <select value = {viewMonth} onChange = {handleMonth}>
-          {months.map((month) =>
+          {months.map(month =>
           <option value={month.value}>
             {month.label}
           </option>
