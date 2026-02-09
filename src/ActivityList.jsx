@@ -7,7 +7,7 @@ export const ActivityList = ({activities, onDeleteActivity, onEditActivity, edit
   const [viewMonth,setViewMonth] = useState(viewDate.getMonth());
   const [viewYear,setViewYear] = useState(viewDate.getFullYear());
   var totalcalories=0;
-  
+  //Calculate days in a month
   var daysInMonth = new Date(viewYear,viewMonth + 1, 0).getDate();
   var daysList = [];
   var i=1;
