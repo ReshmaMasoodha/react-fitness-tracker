@@ -38,6 +38,11 @@ export const ActivityList = ({activities, onDeleteActivity, onEditActivity, edit
     setViewDate(changeDate);
     setViewYear(chosenYear);
   }
+  const handleToday = () => {
+    setViewDate(currentDate);
+    setViewMonth(viewDate.getMonth());
+    setViewYear(viewDate.getFullYear());
+  }
   const months = [
     {value: 0, label: 'January'},
     {value: 1, label: 'February'},
@@ -141,6 +146,9 @@ export const ActivityList = ({activities, onDeleteActivity, onEditActivity, edit
             2023
           </option>
         </select>
+        {viewDate.getDate() != currentDate.getDate() || viewDate.getMonth() != currentDate.getMonth() || viewDate.getFullYear() != currentDate.getFullYear() ?
+          <button onClick = {handleToday}> Today </button> : <p> </p>
+        }
       </lable>
         { filteredActivites.length>0?
         filteredActivites.map(activity=>(
