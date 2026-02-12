@@ -1,4 +1,5 @@
 import {ActivityItem} from './ActivityItem'
+import { isToday, isThisWeek } from './utils/dateUtils.js'
 import { useState} from 'react'
 export const ActivityList = ({activities, onDeleteActivity, onEditActivity, editId, updateAct}) => {
   const [dateFilter,setDateFilter] = useState('day');
@@ -57,25 +58,6 @@ export const ActivityList = ({activities, onDeleteActivity, onEditActivity, edit
     {value: 10, label: 'November'},
     {value: 11, label: 'December'},
   ]
-  const isToday = (dat,cur) => {
-    if(dat.getDate()==cur.getDate()){
-      return true
-    }
-    else{
-      return false
-    }
-  }
-  const isThisWeek = (dat,cur) => {
-    const dayofWeek = cur.getDay();
-    const startOfWeek = new Date(cur.getFullYear(),cur.getMonth(),cur.getDate()-dayofWeek);
-    const endOfWeek = new Date(cur.getFullYear(),cur.getMonth(),startOfWeek.getDate()+6);
-    if(dat.getDate()>=startOfWeek.getDate()&&dat.getDate()<=endOfWeek.getDate()){
-      return true;
-    }
-    else{
-      return false;
-    }
-  }
   const filteredActivites = activities.filter(act=> {
     const actDate=new Date(act.date);
     if (actDate.getFullYear()==viewDate.getFullYear()&&actDate.getMonth()==viewDate.getMonth()){
